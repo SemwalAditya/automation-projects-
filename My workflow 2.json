@@ -1,0 +1,286 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Agent Context\n\nThe following details describe the user you are assisting:\n\nName: Aditya Semwal\n\nRole: QE Engineer\n\nPrimary Responsibility\n\nYour main task is to verify every change on the staging environment after updates or deployments.\n\nLogin Credentials\n\nUse the following credentials to access the staging environment:\n\nURL: https://qe-tayyab.cialfo.sg/app/counselor_dashboard\n\nUser ID: Tayyab.javed+qeadmin5@cialfo.com.sg\n\nPassword: Test1234\n\n⚠️ Important Login Notes\n\nSometimes the system may automatically log you out.\n\nIf this happens, revisit the URL and log in again using the same credentials.\n\nIf you encounter the following notification, ignore it and continue testing:\n\n\"Uh oh, seems like your email has been used for another account on Cialfo. Please chat with us to get support on this.\"\n\nExpected Behavior\n\nFocus only on functional verification and validation.\n\nEnsure all observed changes are properly tested in the staging environment.\n\nDo not attempt to modify credentials or account details."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -16,
+        -192
+      ],
+      "id": "1ec2845a-ca06-4d35-81e1-9b5c2453e4de",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -80,
+        64
+      ],
+      "id": "559e2039-5336-40d9-82f5-f36e0b5db702",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "options": {
+          "jql": "project = QT AND assignee = currentUser() AND type = Epic AND status = \"To Do\" ORDER BY created DESC"
+        }
+      },
+      "type": "n8n-nodes-base.jiraTool",
+      "typeVersion": 1,
+      "position": [
+        288,
+        48
+      ],
+      "id": "4beb18fc-6260-414b-b10b-fbec9f21e1af",
+      "name": "Get many issues in Jira Software",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "zUCNAbo3dSRAcZHS",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1hjcRoq2eQmS2ZM1tlqlIBVHDSdk_cMZV18YRboLcLeI/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hjcRoq2eQmS2ZM1tlqlIBVHDSdk_cMZV18YRboLcLeI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Test Case ID": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Test_Case_ID', ``, 'string') }}",
+            "Test Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Test_Name', ``, 'string') }}",
+            "Objective": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Objective', ``, 'string') }}",
+            "Priority": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Priority', ``, 'string') }}",
+            "Status": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Status', ``, 'string') }}",
+            "Expected Result": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Expected_Result', ``, 'string') }}",
+            "            Steps": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('____________Steps', ``, 'string') }}",
+            "Precondition": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Precondition', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Test Case ID",
+              "displayName": "Test Case ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Test Name",
+              "displayName": "Test Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Objective",
+              "displayName": "Objective",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Precondition",
+              "displayName": "Precondition",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "            Steps",
+              "displayName": "            Steps",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Expected Result",
+              "displayName": "Expected Result",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        688,
+        -80
+      ],
+      "id": "3d6fdb5d-145c-42a4-84b2-616da9c5bb78",
+      "name": "Append row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "g8DPtlfqcu0r9jvp",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -592,
+        -192
+      ],
+      "id": "81b1e4ce-006f-4014-9ab2-8acde9293792",
+      "name": "When chat message received",
+      "webhookId": "b8a429ab-1f84-440c-9cbc-200702d2840d"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -384,
+        -80
+      ],
+      "id": "a395207a-1189-4fa3-a668-62af996ac9ec",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "vf2dgiWEdp9Gwgjo",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many issues in Jira Software": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7bf22129-5e52-4247-9eb7-2c63f547e81c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2f3449f3038e658b89a05861f0a574fa068ee71447e5d69df76130ca96949cb8"
+  },
+  "id": "E7bEg0C2gx7ChYRI",
+  "tags": []
+}
